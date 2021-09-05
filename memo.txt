@@ -1,0 +1,46 @@
+1.記事一覧を作ろう
+
+・ルーティング
+Routeファサードのgetメソッド
+Route::get('/', 'ArticleController@index');
+
+・データベースから読み込んだデータはLaravelではオブジェクト型として扱われる
+
+・view(ファイル名, [変数名 => 値]); その他withメソッド、compact関数
+return view('articles.index', ['articles' => $articles]);
+
+・@yield('title')とyield('content')nには記事一覧のBladeのtitleセクションとcontentセクションの内容が埋め込められる。
+
+@extends() ベースで使うbladeを宣言する
+
+@section('title', '記事一覧), は@yield('title')に対応する
+
+↓
+
+これらを使うことで
+
+・headタグや scriptタグでのCSSやJavaScriptを、各画面のBladeで都度指定しなくて済む
+
+・その一方で、headタグ内のtitleタグの値を、各画面で異なるものにできる
+
+
+
+2.ユーザー登録機能を作ろう
+
+3.ログイン機能を作ろう
+
+4.記事投稿機能を作ろう
+
+5.記事更新・削除・詳細表示機能を作ろう
+
+6.メールを使ったパスワード再設定機能を作ろう
+
+7.いいね機能を作ろう
+
+8.タグ機能を作ろう
+
+9.フォロー機能とユーザーページ機能を作ろう
+
+10.Googleアカウントを使ったユーザー登録ログイン機能を作ろう
+
+11.デバッグバーを使ってSQLを改善しよう
