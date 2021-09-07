@@ -23,6 +23,44 @@ return view('articles.index', ['articles' => $articles]);
 
 ・その一方で、headタグ内のtitleタグの値を、各画面で異なるものにできる
 
+・@include()で別のビューを取り込む
+
+
+・migrationファイルの作成
+php artisan make:migration create_articles_table --create=articles
+--create=articlesオプションでarticlesテーブルを作成する内容になる。(テーブル名は複数形にする)
+
+・外部キー制約
+//$articlesテーブルのuser_idカラムはusersテーブルに存在するidと同じ値しか入れられなくなる->記事は存在するけどそれを投稿したユーザーが存在しないという状態を作れないようにする
+$table->foreign('user_id')->references('id')->on('users');`
+https://wa3.i-3-i.info/word17575.html
+
+・ユニーク制約
+そのテーブル内で他のレコードと同じ値を重複させない。
+
+・モデルの作成
+php artisan make:model Article
+
+・Eloquent ORM(Eloquent Object Relational Mapping)
+https://qiita.com/gone0021/items/951cd63a7e591e18cd2a
+
+・モデルとモデルのリレーションの追加
+1-1 hasOne()
+1-many hasMany()
+many-1 belongsTo()
+many-many belongsToMany()
+
+・$this
+クラスのインスタンス自身を指す。
+$this->メソッド名()・・・インスタンスが持つメソッドが実行される。
+$this->プロパティ名・・・インスタンスが持つプロパティを参照する。
+
+・戻り値の型宣言
+
+・リレーションでの外部キーは、関連するテーブル名の単数形_idであるという前提がある。
+
+・コレクションとは
+配列データを操作するための書きやすく使いやすいラッパー。
 
 
 2.ユーザー登録機能を作ろう
