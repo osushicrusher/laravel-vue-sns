@@ -65,6 +65,63 @@ $this->プロパティ名・・・インスタンスが持つプロパティを�
 
 2.ユーザー登録機能を作ろう
 
+・Auth::routes();
+
+・php artisan route:list
+
+・トレイト
+use トレイト名と記述して使う
+汎用性の高い機能をトレイトとしてまとめておき、他の複数のクラスで共通して使う。
+Laravelではユーザー登録に関する機能をRegisterUsersトレイととしてまとめておいてくれているので、もしResisterControllerクラス以外にも
+ユーザー登録に関するクラスをつくりたい場合でもこのトレイトをしようして効率的に開発できるようになっている。
+継承との違い・・・phpでは一つのクラスが別のクラスを2つ以上継承することはできない。
+一方、トレイトは幾つでも同時に使用(use)できる。
+
+・三項演算子
+式1 ?: 式3
+式1がtrueの場合は、式1が値となる
+式1がfalseの場合は、式3が値となる
+
+・method_exists(クラス, メソッド名)でクラスに該当するメソッドが存在するか確認する
+property_exists()もあるよ
+
+・バリデーション
+alpha_num・・・英数字かどうか
+
+unique:users・・・usersテーブルの他のレコードのnameカラムにリクエストされたnameと同じ値がないことをチェックする
+
+・route関数
+与えられた名前付きルートのURLを返す。http://localhost/register
+
+@csrf
+BladeがHTMLに変換されると以下のような内容になる(valueの値は毎回変わる)
+Cross-Site Request Forgeries(クロスサイト・リクエスト・フォージェリ)という脆弱性からWebサービスを守るためのトークン情報。
+POSTメソッドのリクエストを受け付ける際にこの情報を見て不正なリクエストでないかどうかをチェックする
+<input type="hidden" name="_token" value="xwwDXDKEEnPoCZMF2xMWDtCbpeQgCSNNVIINugCA">
+
+old関数
+引数にパラメータ名を渡すと、直前のリクエストのパラメータを渡すと直前のリクエストのパラメータを返す。
+ユーザー登録処理でバリデーションエラーになると再びユーザー登録画面が表示されますが、特に何も対応していなかった場合、全ての項目が空で表示されて入力を最初からやり直さなければなりません。
+old関数を使うことで、入力した内容が保持された状態でユーザー登録画面が表示されるようになり、ユーザーはエラーになった箇所だけを修正すれば良くなります。
+ただし、passwordとpassword_confirmationはold関数を使ってもnullが返ります。
+そのため、これら入力項目のinputタグに対してはold関数を使っていません。
+
+@guest, @auth 認証ディレクティブ https://readouble.com/laravel/6.x/ja/blade.html#if-statements
+@guestから@endguestに囲まれた部分はユーザーがまだログインしていない状態の時のみ処理される。
+
+@authから@endauthに囲まれた部分は、ユーザーがログイン済みの状態の時のみ処理される。
+
+エラ〜メッセージの操作 https://readouble.com/laravel/6.x/ja/validation.html#working-with-error-messages
+$errors変数
+Illuminate\Support\MessageBagクラスのインスタンスであり、バリデーションエラーメッセージを配列で持っています。
+以下のコードでは、MessageBagクラスのanyメソッドを使っていますが、これはエラーメッセージの有無を返します。
+@if ($errors->any())
+
+・バリデーションエラメッセージの日本語化
+1, https://readouble.com/laravel/6.x/ja/validation-php.html からb日本語のバリデーション用ファイルを作成し、laravel/resources/lang/jaに配置
+2 laravel/config/app.php 'locale' => 'ja'に変更
+3, laravel/resources/lang/ja/validation.php 項目名を$attributesに連想配列で指定する。
+
 3.ログイン機能を作ろう
 
 4.記事投稿機能を作ろう
